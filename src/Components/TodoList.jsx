@@ -1,6 +1,6 @@
 import React from "react";
 import TodoItem from "./TodoItem";
-import styles from "./TodoList.module.scss";
+import styles from "../Modules/TodoList.module.scss";
 
 function TodoList({ todos, onDeleteTodo, onToggleTodo }) {
   return (

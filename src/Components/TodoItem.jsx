@@ -1,6 +1,6 @@
 import React from "react";
 import Button from "./Button";
-import styles from "./TodoItem.module.scss";
+import styles from "../Modules/TodoItem.module.scss";
 
 function TodoItem({ todo, onDeleteTodo, onToggleTodo }) {
   return (
