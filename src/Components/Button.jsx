@@ -1,9 +1,9 @@
 import React from "react";
 import styles from "../Modules/Button.module.scss";
 
-function Button( onClick, name ) {
+function Button({name, onDeleteTodo} ) {
   return (
-    <button className={styles.button} onClick={onClick}>
+    <button className={styles.button} onClick={onDeleteTodo}>
         {name}
     </button>
   );

@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React, { useState  } from "react";
+import { v4 as uuidv4 } from 'uuid';
 import TodoList from './TodoList';
 import Input from './Input';
-import Button from './Button';
 
-// Organisms
 const TodoApp = () => {
   const [todos, setTodos] = useState([]);
   const [inputValue, setInputValue] = useState("");
@@ -14,19 +13,24 @@ const TodoApp = () => {
 
   const handleAddTodo = (event) => {
     event.preventDefault();
-    setTodos([...todos, inputValue]);
+    const newItem = { id: uuidv4(), text: inputValue, isCompleted: false };
+    setTodos((prevTodos) => [...prevTodos, newItem]);
     setInputValue("");
   };
 
-  const handleDeleteTodo = (index) => {
+  const handleDeleteTodo = (id) => {
+    const index = todos.findIndex((t) => t.id === id);
+    if (index === -1) return; 
     const newTodos = [...todos];
     newTodos.splice(index, 1);
     setTodos(newTodos);
   };
 
-  const handleToggleTodo = (index) => {
+  const handleCheckTodo = (id) => {
+    const index = todos.findIndex((t) => t.id === id);
+    if (index === -1) return; 
     const newTodos = [...todos];
-    newTodos.splice(index, 1);
+    newTodos[index].isCompleted = !newTodos[index].isCompleted;
     setTodos(newTodos);
   };
 
@@ -34,10 +38,9 @@ const TodoApp = () => {
     <>
       <h1>Todo List</h1>
       <form onSubmit={handleAddTodo}>
-        {Input(inputValue, handleInputChange)}
-        {Button(handleAddTodo,"Add Todo")}
+      <Input inputValue={inputValue} handleInputChange={handleInputChange} />
       </form>
-      {TodoList( todos, handleDeleteTodo, handleToggleTodo )}
+      <TodoList todos ={todos} handleDeleteTodo={handleDeleteTodo} handleCheckTodo ={handleCheckTodo}/>
     </>
   );
 };

@@ -1,9 +1,9 @@
 import React from "react";
 import styles from "../Modules/Input.module.scss";
 
-function Input({ value, onChange }) {
+function Input({inputValue, handleInputChange}) {
   return (
-    <input type="text" value={value} className={styles.input} onChange={onChange} />
+    <input type="text" value={inputValue} className={styles.input} onChange={handleInputChange} />
   );
 }
 
