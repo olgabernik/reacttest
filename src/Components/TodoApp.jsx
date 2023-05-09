@@ -39,7 +39,7 @@ const TodoApp = () => {
       <form onSubmit={handleAddTodo}>
       <Input inputValue={inputValue} handleInputChange={handleInputChange} />
       </form>
-      <TodoList todos ={todos} handleDeleteTodo={handleDeleteTodo} handleCheckTodo ={handleCheckTodo}/>
+      <TodoList todos ={todos} onDeleteTodo={handleDeleteTodo} onCheckTodo ={handleCheckTodo}/>
     </>
   );
 };

@@ -6,12 +6,11 @@ import Text from "./Text";
 import styles from "../Modules/TodoItem.module.scss";
 
 function TodoItem({todo, onDeleteTodo, onCheckTodo}) {
-  console.log("todo="+todo);
   return (    
-    <li  className={`${styles.todo} ${todo.isCompleted ? styles.completed : ""}`}>
-      <Checkbox isCompleted={todo.isCompleted} onCheckTodo ={() => onCheckTodo(todo.id)} />
+    <li className={`${styles.todo} ${todo.isCompleted ? styles.completed : ""}`}>
+      <Checkbox isCompleted={todo.isCompleted} onCheckTodo ={onCheckTodo} todoid = {todo.id} />
       <Text text={todo.text} />
-      <Button name = "X" onDeleteTodo ={ () => onDeleteTodo(todo.id)}/>
+      <Button name = "X" onDeleteTodo ={onDeleteTodo} todoid = {todo.id}/>
     </li>
   );
 }
