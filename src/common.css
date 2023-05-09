@@ -1,0 +1,17 @@
+body {
+    text-align: center;
+    font-size: 35px;
+}
+
+h3 {
+    background-color: #a516ed;
+    font-weight: bold;
+    margin: 0px;
+}
+
+.root {
+    font-weight: bold;
+    padding: 5px;
+    margin: 5px;
+    display: inline-block;
+}

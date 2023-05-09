@@ -1,6 +1,17 @@
   .roundCheckbox {
-    margin-left: 10px;
-    color: black;
+    width: 2em;
+    height: 2em;
+    background-color: white;
     border-radius: 50%;
-  }
-  
+    vertical-align: middle;
+    border: 1px solid #ddd;
+    appearance: none;
+    -webkit-appearance: none;
+    outline: none;
+    cursor: pointer;
+    float: left;
+}
+
+.roundCheckbox:checked {
+    background-color: cyan;
+}

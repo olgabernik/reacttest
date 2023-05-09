@@ -36,7 +36,6 @@ const TodoApp = () => {
 
   return (
     <>
-      <h1>Todo List</h1>
       <form onSubmit={handleAddTodo}>
       <Input inputValue={inputValue} handleInputChange={handleInputChange} />
       </form>
