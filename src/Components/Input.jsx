@@ -3,7 +3,7 @@ import styles from "../Modules/Input.module.scss";
 
 function Input({inputValue, handleInputChange}) {
   return (
-    <input type="text" value={inputValue} className={styles.input} onChange={handleInputChange} placeholder="Please enter text here..."/>
+    <input type="text" value={inputValue} className={styles.input} onChange={handleInputChange} maxLength="50" placeholder="Please enter text here..."/>
   );
 }
 

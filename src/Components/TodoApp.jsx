@@ -16,13 +16,21 @@ const TodoApp = () => {
 
   const handleAddTodo = (event) => {
     event.preventDefault();
-    const newItem = { id: uuidv4(), text: inputValue, isCompleted: false };
-    dispatch(addTodo(newItem));
-    setInputValue("");
+    if (inputValue.trim() !== '') {
+      const newItem = { id: uuidv4(), text: inputValue, isCompleted: false };
+      dispatch(addTodo(newItem));
+      setInputValue("");
+    }
+    else {
+      alert("Please enter a valid todo item.");
+    }
   };
 
   const handleDeleteTodo = (id) => {
-    dispatch(deleteTodo(id));
+    const confirmed = window.confirm("Are you sure you want to delete this todo?");
+    if (confirmed) {
+      dispatch(deleteTodo(id));
+    }
   };
 
   const handleCheckTodo = (id) => {

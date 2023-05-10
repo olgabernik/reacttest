@@ -6,7 +6,7 @@ const todosSlice = createSlice({
   initialState: loadState() || [],
   reducers: {
     addTodo: (state, action) => {
-      state.push(action.payload);
+      state.unshift(action.payload);
       saveState(state);
     },
     deleteTodo: (state, action) => {

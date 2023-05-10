@@ -4,7 +4,7 @@ import { loadState, saveState } from './localStorage';
 
 const persistedState = loadState();
 
-export const store = configureStore({
+const store = configureStore({
   reducer: {
     todos: todosReducer,
   },
