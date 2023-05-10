@@ -1,8 +1,19 @@
 import { configureStore } from '@reduxjs/toolkit';
-import todoReducer from './TodoSlice';
+import todosReducer from './todosSlice';
+import { loadState, saveState } from './localStorage';
+
+const persistedState = loadState();
 
 export const store = configureStore({
   reducer: {
-    todo: todoReducer,
+    todos: todosReducer,
   },
+  preloadedState: persistedState,
 });
+
+store.subscribe(() => {
+  saveState(store.getState());
+});
+
+export default store;
+

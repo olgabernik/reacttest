@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "../Modules/Checkbox.module.scss";
 
-function Checkbox({isCompleted, onCheckTodo, todoid}) {
+function Checkbox({isCompleted = false, onCheckTodo, todoid}) {
   return (
     <input
         type="checkbox"
