@@ -16,34 +16,44 @@ const todosSlice = createSlice({
         state.splice(index, 1);
         saveState(state);
       }
-    },    
+    },
     checkTodo: (state, action) => {
+      const newState = state;
       const id = action.payload;
       const index = state.findIndex((todo) => todo.id === id);
       if (index !== -1) {
-        state[index].isCompleted = !state[index].isCompleted;
-        saveState(state);
+        newState[index].isCompleted = !newState[index].isCompleted;
+        saveState(newState);
       }
     },
     filterTodo: (state, action) => {
-      state = loadState();
+      const newState = loadState();
       const filter = action.payload;
       if (filter === 'All') {
-        return state || [];
-      } else if (filter === 'Completed') {
-        return state.filter((todo) => todo.isCompleted);
-      } else if (filter === 'Active') {
-        return state.filter((todo) => !todo.isCompleted);
-      }      
-    },    
+        return newState || [];
+      }
+      if (filter === 'Completed') {
+        return newState.filter((todo) => todo.isCompleted);
+      }
+      if (filter === 'Active') {
+        return newState.filter((todo) => !todo.isCompleted);
+      }
+      return newState;
+    },
     clearCompleted: (state) => {
-      var newState = state.filter((todo) => !todo.isCompleted);
+      const newState = state.filter((todo) => !todo.isCompleted);
       saveState(newState);
       return newState;
-    }
+    },
   },
 });
 
-export const { addTodo, deleteTodo, checkTodo, filterTodo, clearCompleted } = todosSlice.actions;
+export const {
+  addTodo,
+  deleteTodo,
+  checkTodo,
+  filterTodo,
+  clearCompleted,
+} = todosSlice.actions;
 
 export default todosSlice.reducer;

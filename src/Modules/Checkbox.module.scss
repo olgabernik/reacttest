@@ -1,24 +1,24 @@
-  .roundCheckbox {
-    width: 2em;
-    height: 2em;
-    background-color: white;
-    border-radius: 50%;
-    vertical-align: middle;
-    border: 1px solid #ddd;
-    appearance: none;
-    -webkit-appearance: none;
-    outline: none;
-    cursor: pointer;
-    float: left;
+.roundCheckbox {
+  width: 2em;
+  height: 2em;
+  background-color: white;
+  border-radius: 50%;
+  vertical-align: middle;
+  border: 1px solid #ddd;
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+  cursor: pointer;
+  float: left;
 }
 
 .roundCheckbox:checked {
-    background: lightskyblue;
-    position: relative;
+  background: lightskyblue;
+  position: relative;
 }
 
 .roundCheckbox:checked:before {
-  content: "✔";
+  content: '✔';
   font-size: 1.4em;
   color: #fff;
   position: absolute;

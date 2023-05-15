@@ -1,10 +1,23 @@
-import React from "react";
-import styles from "../Modules/Input.module.scss";
+import React from 'react';
+import PropTypes from 'prop-types';
+import styles from '../Modules/Input.module.scss';
 
-function Input({inputValue, handleInputChange}) {
+function Input({ inputValue, handleInputChange }) {
   return (
-    <input type="text" value={inputValue} className={styles.input} onChange={handleInputChange} maxLength="50" placeholder="Please enter text here..."/>
+    <input
+      type="text"
+      value={inputValue}
+      className={styles.input}
+      onChange={handleInputChange}
+      maxLength="50"
+      placeholder="Please enter text here..."
+    />
   );
 }
+
+Input.propTypes = {
+  inputValue: PropTypes.string.isRequired,
+  handleInputChange: PropTypes.func.isRequired,
+};
 
 export default Input;
