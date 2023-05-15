@@ -12,6 +12,12 @@ h3 {
 .root {
   font-weight: bold;
   padding: 5px;
+  display: inline-block;
+}
+
+.parent{
+  font-weight: bold;
+  padding: 5px;
   margin: 5px;
   display: inline-block;
 }

@@ -76,7 +76,7 @@ function TodoApp() {
         onCheckTodo={handleCheckTodo}
       />
       <Filter
-        count={todos.length}
+        todos={todos}
         filters={filters}
         onSelectFilter={onSelectFilter}
         onClearCompleted={onClearCompleted}
