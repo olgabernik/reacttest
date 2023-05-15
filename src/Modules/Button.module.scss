@@ -1,10 +1,16 @@
-  .button {
+@mixin button {
     margin-left: 10px;
-    color: darkgray;
     border: none;
     background-color: transparent;
-    font-size: 25px;
+    font-size: 20px;
     float: right;
     cursor: pointer;
   }
-  
+  .button {
+    @include button;
+    color: darkgray;
+  }
+  .buttonClicked {
+    @include button;
+    color: black;
+  }

@@ -13,5 +13,14 @@
 }
 
 .roundCheckbox:checked {
-    background-color: lightskyblue;
+    background: lightskyblue;
+    position: relative;
+}
+
+.roundCheckbox:checked:before {
+  content: "✔";
+  font-size: 1.4em;
+  color: #fff;
+  position: absolute;
+  right: 4px;
 }

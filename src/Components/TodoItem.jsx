@@ -10,7 +10,7 @@ function TodoItem({todo, onDeleteTodo, onCheckTodo}) {
     <li className={`${styles.todo} ${todo.isCompleted ? styles.completed : ""}`}>
       <Checkbox isCompleted={todo.isCompleted} onCheckTodo ={onCheckTodo} todoid = {todo.id} />
       <Text text={todo.text} />
-      <Button name = "X" onDeleteTodo ={onDeleteTodo} todoid = {todo.id}/>
+      <Button name = "X" onClick ={onDeleteTodo} parameter={todo.id}/>
     </li>
   );
 }
