@@ -5,7 +5,10 @@ import styles from '../Modules/TodoList.module.scss';
 
 function TodoList({ todos, onDeleteTodo, onCheckTodo }) {
   return (
-    <ul className={styles.todoList}>
+    <ul
+      className={styles.todoList}
+      data-test="todo-list"
+    >
       {todos.map((todo) => (
         <TodoItem
           key={todo.id}
