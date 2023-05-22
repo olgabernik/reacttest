@@ -14,7 +14,7 @@ function TodoList({
           <ul
             ref={provided.innerRef}
             className={styles.todoList}
-            data-test="todo-list"
+            data-testid="todo-list"
             onDragEnter={provided.droppableProps.onDragEnter}
             onDragLeave={provided.droppableProps.onDragLeave}
             onDragOver={provided.droppableProps.onDragOver}

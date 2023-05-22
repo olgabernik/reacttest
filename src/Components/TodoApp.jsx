@@ -20,6 +20,7 @@ function TodoApp() {
   const [inputValue, setInputValue] = useState('');
   const filters = ['All', 'Completed', 'Active'];
   const [selectedFilter, setSelectedFilter] = useState('All');
+  const count = todos.filter((todo) => !todo.isCompleted).length;
 
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
@@ -83,7 +84,7 @@ function TodoApp() {
         onDragEnd={handleDragEnd}
       />
       <Filter
-        todos={todos}
+        count={count}
         filters={filters}
         onSelectFilter={onSelectFilter}
         onClearCompleted={onClearCompleted}

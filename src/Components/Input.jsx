@@ -11,7 +11,7 @@ function Input({ inputValue, handleInputChange }) {
       onChange={handleInputChange}
       maxLength="50"
       placeholder="Please enter text here..."
-      data-test="input-new-todo"
+      data-testid="input-new-todo"
     />
   );
 }

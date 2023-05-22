@@ -5,13 +5,12 @@ import Text from './Text';
 import styles from '../Modules/Filter.module.scss';
 
 function Filter({
-  todos,
+  count,
   filters,
   onSelectFilter,
   onClearCompleted,
   selectedFilter,
 }) {
-  const count = todos.filter((todo) => !todo.isCompleted).length;
   return (
     <div className={styles.filter}>
       <Text text={`${count} items left`} />
@@ -30,13 +29,7 @@ function Filter({
 }
 
 Filter.propTypes = {
-  todos: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      text: PropTypes.string.isRequired,
-      isCompleted: PropTypes.bool.isRequired,
-    }),
-  ).isRequired,
+  count: PropTypes.number.isRequired,
   filters: PropTypes.arrayOf(PropTypes.string).isRequired,
   onSelectFilter: PropTypes.func.isRequired,
   onClearCompleted: PropTypes.func.isRequired,

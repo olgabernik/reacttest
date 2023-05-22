@@ -15,13 +15,16 @@ function TodoItem({
     <Draggable draggableId={todo.id} index={index}>
       {(provided) => (
         <li
-          className={`${styles.todo} ${todo.isCompleted ? styles.completed : ''}`}
+          className={`${styles.todo} ${
+            todo.isCompleted ? styles.completed : ''
+          }`}
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           style={{
             ...provided.draggableProps.style,
           }}
+          data-testid="todo-item"
         >
           <Checkbox
             isCompleted={todo.isCompleted}

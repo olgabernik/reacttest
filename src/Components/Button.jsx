@@ -3,10 +3,7 @@ import PropTypes from 'prop-types';
 import styles from '../Modules/Button.module.scss';
 
 function Button({
-  name,
-  onClick,
-  parameter,
-  isSelected,
+  name, onClick, parameter, isSelected,
 }) {
   const handleClick = () => {
     onClick(parameter);
