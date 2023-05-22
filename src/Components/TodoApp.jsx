@@ -7,6 +7,7 @@ import {
   deleteTodo,
   filterTodo,
   clearCompleted,
+  reorderTodos,
 } from '../todosSlice';
 
 import TodoList from './TodoList';
@@ -65,6 +66,11 @@ function TodoApp() {
     }
   };
 
+  const handleDragEnd = (result) => {
+    if (!result.destination) return;
+    dispatch(reorderTodos(result));
+  };
+
   return (
     <>
       <form onSubmit={handleAddTodo}>
@@ -74,6 +80,7 @@ function TodoApp() {
         todos={todos}
         onDeleteTodo={handleDeleteTodo}
         onCheckTodo={handleCheckTodo}
+        onDragEnd={handleDragEnd}
       />
       <Filter
         todos={todos}

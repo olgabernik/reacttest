@@ -45,6 +45,14 @@ const todosSlice = createSlice({
       saveState(newState);
       return newState;
     },
+    reorderTodos: (state, action) => {
+      const { source, destination } = action.payload;
+      const newState = state;
+      const [reorderedItem] = newState.splice(source.index, 1);
+      newState.splice(destination.index, 0, reorderedItem);
+      saveState(newState);
+      return newState;
+    },
   },
 });
 
@@ -54,6 +62,7 @@ export const {
   checkTodo,
   filterTodo,
   clearCompleted,
+  reorderTodos,
 } = todosSlice.actions;
 
 export default todosSlice.reducer;
