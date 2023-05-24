@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
-import {
-  addTodo,
-  checkTodo,
-  deleteTodo,
-  filterTodo,
-  clearCompleted,
-  reorderTodos,
-} from '../todosSlice';
+import { todoActions } from '../todosSlice';
+import { setFilter } from '../filtersSlice';
+import store from '../store';
+import filteredTodosSelector from '../filterSelectors';
+import { FILTER_ALL } from '../constants';
 
 import TodoList from './TodoList';
 import Input from './Input';
@@ -16,11 +13,14 @@ import Filter from './Filter';
 
 function TodoApp() {
   const dispatch = useDispatch();
-  const todos = useSelector((state) => state.todos);
+  let todos = useSelector((state) => state.todoitems);
+  const count = todos ? todos.filter((todo) => !todo.isCompleted).length : 0;
+  const filteredTodos = filteredTodosSelector(store.getState());
+  todos = filteredTodos || todos;
+
   const [inputValue, setInputValue] = useState('');
-  const filters = ['All', 'Completed', 'Active'];
-  const [selectedFilter, setSelectedFilter] = useState('All');
-  const count = todos.filter((todo) => !todo.isCompleted).length;
+
+  const [selectedFilter, setSelectedFilter] = useState(FILTER_ALL);
 
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
@@ -30,7 +30,7 @@ function TodoApp() {
     event.preventDefault();
     if (inputValue.trim() !== '') {
       const newItem = { id: uuidv4(), text: inputValue, isCompleted: false };
-      dispatch(addTodo(newItem));
+      dispatch(todoActions.addTodo(newItem));
       setInputValue('');
     } else {
       // eslint-disable-next-line no-alert
@@ -44,17 +44,17 @@ function TodoApp() {
       'Are you sure you want to delete this todo?',
     );
     if (confirmed) {
-      dispatch(deleteTodo(id));
+      dispatch(todoActions.deleteTodo(id));
     }
   };
 
   const handleCheckTodo = (id) => {
-    dispatch(checkTodo(id));
+    dispatch(todoActions.checkTodo(id));
   };
 
-  const onSelectFilter = (filter = 'All') => {
+  const onSelectFilter = (filter = FILTER_ALL) => {
     setSelectedFilter(filter);
-    dispatch(filterTodo(filter));
+    dispatch(setFilter(filter));
   };
 
   const onClearCompleted = () => {
@@ -63,13 +63,13 @@ function TodoApp() {
       'Are you sure you want to clear all completed todos?',
     );
     if (confirmed) {
-      dispatch(clearCompleted());
+      dispatch(todoActions.clearCompleted());
     }
   };
 
   const handleDragEnd = (result) => {
     if (!result.destination) return;
-    dispatch(reorderTodos(result));
+    dispatch(todoActions.reorderTodos(result));
   };
 
   return (
@@ -85,7 +85,6 @@ function TodoApp() {
       />
       <Filter
         count={count}
-        filters={filters}
         onSelectFilter={onSelectFilter}
         onClearCompleted={onClearCompleted}
         selectedFilter={selectedFilter}

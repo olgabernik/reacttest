@@ -17,6 +17,7 @@
     "expect": "readonly"
   },
   "rules": {
-    "strict": "off"
+    "strict": "off",
+    "no-param-reassign": "off"
   }
 }

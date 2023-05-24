@@ -1,5 +1,5 @@
 /// <reference types="cypress" />
-
+import { FILTER_ALL } from '../../src/constants'
 describe('to-do app e2e', () => {
   beforeEach(() => {
     cy.visit('http://localhost:3000/reacttest');
@@ -74,7 +74,7 @@ describe('to-do app e2e', () => {
     });
 
     it('show all tasks', () => {
-      cy.contains('All').click();
+      cy.contains(FILTER_ALL).click();
 
       cy.get('[data-testid=todo-list] li span')
         .should('have.length', 2)

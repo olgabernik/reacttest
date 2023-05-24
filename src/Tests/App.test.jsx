@@ -1,22 +1,25 @@
 import React from 'react';
 import { configureStore } from '@reduxjs/toolkit';
-
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import {
+  render, screen, fireEvent, waitFor,
+} from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
-import todosReducer, {
-  addTodo,
-  deleteTodo,
-  checkTodo,
-  clearCompleted,
-  filterTodo,
-} from '../todosSlice';
+import thunk from 'redux-thunk';
+import todosReducer, { todoActions } from '../todosSlice';
+import filtersReducer, { setFilter } from '../filtersSlice';
+import { FILTER_ALL, FILTER_ACTIVE, FILTER_COMPLETED } from '../constants';
 import { loadState } from '../localStorage';
 import TodoApp from '../Components/TodoApp';
 import '../common.css';
 
-const mockStore = configureMockStore();
+const todoitems = [
+  { id: '1', text: 'Task 1', isCompleted: true },
+  { id: '2', text: 'Task 2', isCompleted: false },
+];
+
+const mockStore = configureMockStore([thunk]);
 let store;
 const localStorageMock = {
   loadState: jest.fn(),
@@ -24,15 +27,17 @@ const localStorageMock = {
 };
 global.localStorage = localStorageMock;
 
+jest.mock('../filterSelectors', () => ({
+  __esModule: true,
+  default: jest.fn(),
+  getTodos: jest.fn().mockReturnValue(todoitems),
+}));
+
 describe('TodoApp', () => {
   beforeEach(() => {
     store = mockStore({
-      todos: [
-        { id: '1', text: 'Task 1', isCompleted: false },
-        { id: '2', text: 'Task 2', isCompleted: false },
-        { id: '3', text: 'Task 3', isCompleted: true },
-        { id: '4', text: 'Task 4', isCompleted: true },
-      ],
+      todoitems,
+      todofilter: FILTER_ALL,
     });
   });
 
@@ -44,7 +49,8 @@ describe('TodoApp', () => {
     const persistedState = loadState();
     const teststore = configureStore({
       reducer: {
-        todos: todosReducer,
+        todoitems: todosReducer,
+        todofilter: filtersReducer,
       },
       preloadedState: persistedState,
     });
@@ -59,9 +65,8 @@ describe('TodoApp', () => {
       <Provider store={store}>
         <TodoApp />
       </Provider>,
-      div
+      div,
     );
-
     const input = screen.getByRole('textbox');
     expect(input).toBeInTheDocument();
 
@@ -69,23 +74,23 @@ describe('TodoApp', () => {
     expect(list).toBeInTheDocument();
 
     const listitem = screen.getAllByTestId('todo-item');
-    expect(listitem).toHaveLength(4);
+    expect(listitem).toHaveLength(2);
 
     const completedItem = screen
       .getAllByTestId('todo-item')
       .filter((item) => item.classList.contains('completed'));
-    expect(completedItem).toHaveLength(2);
+    expect(completedItem).toHaveLength(1);
   });
 
   test('renders filters correctly', () => {
     render(
       <Provider store={store}>
         <TodoApp />
-      </Provider>
+      </Provider>,
     );
-    const allFilterButton = screen.getByText('All');
-    const activeFilterButton = screen.getByText('Active');
-    const completedFilterButton = screen.getByText('Completed');
+    const allFilterButton = screen.getByText(FILTER_ALL);
+    const activeFilterButton = screen.getByText(FILTER_ACTIVE);
+    const completedFilterButton = screen.getByText(FILTER_COMPLETED);
 
     expect(allFilterButton).toBeInTheDocument();
     expect(activeFilterButton).toBeInTheDocument();
@@ -96,44 +101,44 @@ describe('TodoApp', () => {
     render(
       <Provider store={store}>
         <TodoApp />
-      </Provider>
+      </Provider>,
     );
-    const allFilterButton = screen.getByText('All');
-    const activeFilterButton = screen.getByText('Active');
-    const completedFilterButton = screen.getByText('Completed');
+    const allFilterButton = screen.getByText(FILTER_ALL);
+    const activeFilterButton = screen.getByText(FILTER_ACTIVE);
+    const completedFilterButton = screen.getByText(FILTER_COMPLETED);
 
     // Initially, all todos are displayed
-    expect(screen.getAllByTestId('todo-item').length).toBe(4);
+    expect(screen.getAllByTestId('todo-item').length).toBe(2);
 
     // Click Active filter
     fireEvent.click(activeFilterButton);
-    expect(store.getActions()).toContainEqual(filterTodo('Active'));
+    expect(store.getActions()).toContainEqual(setFilter(FILTER_ACTIVE));
     waitFor(() => {
-      expect(screen.getAllByTestId('todo-item').length).toBe(2);
+      expect(screen.getAllByTestId('todo-item').length).toBe(1);
       expect(
         screen
           .getAllByTestId('todo-item')
-          .filter((item) => item.classList.contains('completed')).length
-      ).toBe(2);
+          .filter((item) => item.classList.contains('completed')).length,
+      ).toBe(1);
     });
 
     // Click Completed filter
     fireEvent.click(completedFilterButton);
-    expect(store.getActions()).toContainEqual(filterTodo('Completed'));
+    expect(store.getActions()).toContainEqual(setFilter(FILTER_COMPLETED));
     waitFor(() => {
-      expect(screen.getAllByTestId('todo-item').length).toBe(2);
+      expect(screen.getAllByTestId('todo-item').length).toBe(1);
       expect(
         screen
           .getAllByTestId('todo-item')
-          .filter((item) => !item.classList.contains('completed')).length
-      ).toBe(2);
+          .filter((item) => !item.classList.contains('completed')).length,
+      ).toBe(1);
     });
 
     // Click All filter
     fireEvent.click(allFilterButton);
-    expect(store.getActions()).toContainEqual(filterTodo('All'));
+    expect(store.getActions()).toContainEqual(setFilter(FILTER_ALL));
     waitFor(() => {
-      expect(screen.getAllByTestId('todo-item').length).toBe(4);
+      expect(screen.getAllByTestId('todo-item').length).toBe(2);
     });
   });
 
@@ -141,36 +146,36 @@ describe('TodoApp', () => {
     render(
       <Provider store={store}>
         <TodoApp />
-      </Provider>
+      </Provider>,
     );
     const clearCompletedButton = screen.getByText('Clear Completed');
 
-    expect(screen.getAllByTestId('todo-item').length).toBe(4);
+    expect(screen.getAllByTestId('todo-item').length).toBe(2);
     expect(
       screen
         .getAllByTestId('todo-item')
-        .filter((item) => item.classList.contains('completed')).length
-    ).toBe(2);
+        .filter((item) => item.classList.contains('completed')).length,
+    ).toBe(1);
     expect(
       screen
         .getAllByTestId('todo-item')
-        .filter((item) => !item.classList.contains('completed')).length
-    ).toBe(2);
+        .filter((item) => !item.classList.contains('completed')).length,
+    ).toBe(1);
 
     jest.spyOn(window, 'confirm').mockImplementation(() => true);
     fireEvent.click(clearCompletedButton);
 
-    expect(store.getActions()).toContainEqual(clearCompleted());
+    expect(store.getActions()).toContainEqual(todoActions.clearCompleted());
     waitFor(() => {
       expect(
         screen
           .getAllByTestId('todo-item')
-          .filter((item) => !item.classList.contains('completed')).length
-      ).toBe(2);
+          .filter((item) => !item.classList.contains('completed')).length,
+      ).toBe(1);
       expect(
         screen
           .getAllByTestId('todo-item')
-          .filter((item) => item.classList.contains('completed')).length
+          .filter((item) => item.classList.contains('completed')).length,
       ).toBe(0);
     });
   });
@@ -179,17 +184,17 @@ describe('TodoApp', () => {
     render(
       <Provider store={store}>
         <TodoApp />
-      </Provider>
+      </Provider>,
     );
 
     const listItem = screen
       .getAllByTestId('todo-item')
-      .filter((item) => !item.classList.contains('completed'))[1];
+      .filter((item) => !item.classList.contains('completed'))[0];
     const checkbox = listItem.querySelector('input[type="checkbox"]');
 
     fireEvent.click(checkbox);
 
-    expect(store.getActions()).toContainEqual(checkTodo('2'));
+    expect(store.getActions()).toContainEqual(todoActions.checkTodo('2'));
 
     waitFor(() => {
       expect(checkbox).toBeChecked();
@@ -201,13 +206,13 @@ describe('TodoApp', () => {
     render(
       <Provider store={store}>
         <TodoApp />
-      </Provider>
+      </Provider>,
     );
     jest.spyOn(window, 'confirm').mockImplementation(() => true);
     const deleteButton = screen.getAllByText('X')[0];
     fireEvent.click(deleteButton);
 
-    expect(store.getActions()).toContainEqual(deleteTodo('1'));
+    expect(store.getActions()).toContainEqual(todoActions.deleteTodo('1'));
     waitFor(() => {
       const deletedTodoItem = screen.queryByText('Task 1');
       expect(deletedTodoItem).not.toBeInTheDocument();
@@ -218,7 +223,7 @@ describe('TodoApp', () => {
     render(
       <Provider store={store}>
         <TodoApp />
-      </Provider>
+      </Provider>,
     );
 
     const inputElement = screen.getByRole('textbox');
@@ -227,11 +232,11 @@ describe('TodoApp', () => {
     fireEvent.submit(inputElement);
 
     expect(store.getActions()).toContainEqual(
-      addTodo({
+      todoActions.addTodo({
         id: expect.any(String),
         text: 'New Todo',
         isCompleted: false,
-      })
+      }),
     );
 
     waitFor(() => {
@@ -244,7 +249,7 @@ describe('TodoApp', () => {
     render(
       <Provider store={store}>
         <TodoApp />
-      </Provider>
+      </Provider>,
     );
 
     const inputElement = screen.getByRole('textbox');
@@ -255,7 +260,7 @@ describe('TodoApp', () => {
     waitFor(() => {
       expect(window.alert).toHaveBeenCalledTimes(1);
       expect(window.alert).toHaveBeenCalledWith(
-        'Please enter a valid todo item.'
+        'Please enter a valid todo item.',
       );
     });
   });
@@ -264,7 +269,7 @@ describe('TodoApp', () => {
     render(
       <Provider store={store}>
         <TodoApp />
-      </Provider>
+      </Provider>,
     );
 
     const draggable = screen.getAllByTestId('todo-item')[1]; // Assuming the second draggable item
@@ -277,84 +282,72 @@ describe('TodoApp', () => {
     fireEvent.dragEnd(draggable);
 
     waitFor(() => {
-      expect(store.getState().todos).toEqual([
-        { id: '2', text: 'Task 2', isCompleted: false },
-        { id: '1', text: 'Task 1', isCompleted: false },
-        { id: '3', text: 'Task 3', isCompleted: true },
-        { id: '4', text: 'Task 4', isCompleted: true },
-      ]);
+      expect(store.getState().todoitems).toEqual({
+        todoitems: [
+          { id: '2', text: 'Task 2', isCompleted: false },
+          { id: '1', text: 'Task 1', isCompleted: false },
+        ],
+        todofilter: FILTER_ALL,
+      });
     });
   });
-});
 
-describe('check todosSlice reducers', () => {
-  it('should add a new todo item', () => {
-    const initialState = [];
-    const action = addTodo({
-      id: '1',
-      text: 'New Todo',
-      isCompleted: false,
-    });
-    const state = todosReducer(initialState, action);
-    expect(state).toEqual([
-      {
+  describe('test todosReducer reducer', () => {
+    test('test reducer for add a new todo item', () => {
+      const emptyInitialState = [];
+      const action = todoActions.addTodo({
         id: '1',
         text: 'New Todo',
         isCompleted: false,
-      },
-    ]);
+      });
+      const state = todosReducer(emptyInitialState, action);
+      expect(state).toEqual([
+        {
+          id: '1',
+          text: 'New Todo',
+          isCompleted: false,
+        },
+      ]);
+    });
+
+    test('test reducer for delete a todo item', () => {
+      const action = todoActions.deleteTodo('1');
+      const state = todosReducer(store.getState().todoitems, action);
+      expect(state).toEqual([{ id: '2', text: 'Task 2', isCompleted: false }]);
+    });
+
+    test('test reducer for mark a todo item as completed', () => {
+      const action = todoActions.checkTodo('2');
+      const state = todosReducer(store.getState().todoitems, action);
+      expect(state).toEqual([
+        { id: '1', text: 'Task 1', isCompleted: true },
+        { id: '2', text: 'Task 2', isCompleted: true },
+      ]);
+    });
+
+    test('test reducer for clear completed todos', () => {
+      const action = todoActions.clearCompleted();
+      const state = todosReducer(store.getState().todoitems, action);
+      expect(state).toEqual([{ id: '2', text: 'Task 2', isCompleted: false }]);
+    });
   });
 
-  it('should delete a todo item', () => {
-    const initialState = [
-      { id: '1', text: 'Todo 1', isCompleted: false },
-      { id: '2', text: 'Todo 2', isCompleted: false },
-    ];
-    const action = deleteTodo('1');
-    const state = todosReducer(initialState, action);
-    expect(state).toEqual([{ id: '2', text: 'Todo 2', isCompleted: false }]);
-  });
+  describe('test filter reducer', () => {
+    test('test reducer for filter todos by "Completed" status', () => {
+      const action = setFilter(FILTER_COMPLETED);
+      const state = filtersReducer(store.getState(), action);
+      expect(state).toEqual(FILTER_COMPLETED);
+    });
 
-  it('should mark a todo item as completed', () => {
-    const initialState = [
-      { id: '1', text: 'Todo 1', isCompleted: false },
-      { id: '2', text: 'Todo 2', isCompleted: false },
-    ];
-    const action = checkTodo('1');
-    const state = todosReducer(initialState, action);
-    expect(state).toEqual([
-      { id: '1', text: 'Todo 1', isCompleted: true },
-      { id: '2', text: 'Todo 2', isCompleted: false },
-    ]);
-  });
-
-  it('should filter todos by "Completed" status', () => {
-    const initialState = [
-      { id: '1', text: 'Todo 1', isCompleted: true },
-      { id: '2', text: 'Todo 2', isCompleted: false },
-    ];
-    const action = filterTodo('Completed');
-    const state = todosReducer(initialState, action);
-    expect(state).toEqual([{ id: '1', text: 'Todo 1', isCompleted: true }]);
-  });
-
-  it('should filter todos by "Active" status', () => {
-    const initialState = [
-      { id: '1', text: 'Todo 1', isCompleted: true },
-      { id: '2', text: 'Todo 2', isCompleted: false },
-    ];
-    const action = filterTodo('Active');
-    const state = todosReducer(initialState, action);
-    expect(state).toEqual([{ id: '2', text: 'Todo 2', isCompleted: false }]);
-  });
-
-  it('should clear completed todos', () => {
-    const initialState = [
-      { id: '1', text: 'Todo 1', isCompleted: true },
-      { id: '2', text: 'Todo 2', isCompleted: false },
-    ];
-    const action = clearCompleted();
-    const state = todosReducer(initialState, action);
-    expect(state).toEqual([{ id: '2', text: 'Todo 2', isCompleted: false }]);
+    test('test reducer for filter todos by "Active" status', () => {
+      const action = setFilter(FILTER_ACTIVE);
+      const state = filtersReducer(store.getState(), action);
+      expect(state).toEqual(FILTER_ACTIVE);
+    });
+    test('test reducer for show all todos', () => {
+      const action = setFilter(FILTER_ALL);
+      const state = filtersReducer(store.getState(), action);
+      expect(state).toEqual(FILTER_ALL);
+    });
   });
 });
