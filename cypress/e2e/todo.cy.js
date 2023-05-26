@@ -1,5 +1,5 @@
 /// <reference types="cypress" />
-import { FILTER_ALL } from '../../src/constants'
+import { FILTER_ALL, FILTER_ACTIVE, FILTER_COMPLETED } from '../../src/constants'
 describe('to-do app e2e', () => {
   beforeEach(() => {
     cy.visit('http://localhost:3000/reacttest');
@@ -52,7 +52,7 @@ describe('to-do app e2e', () => {
     });
 
     it('can filter for uncompleted tasks', () => {
-      cy.contains('Active').click();
+      cy.contains(FILTER_ACTIVE).click();
 
       cy.get('[data-testid=todo-list] li span')
         .should('have.length', 1)
@@ -63,7 +63,7 @@ describe('to-do app e2e', () => {
     });
 
     it('can filter for completed tasks', () => {
-      cy.contains('Completed').click();
+      cy.contains(FILTER_COMPLETED).click();
 
       cy.get('[data-testid=todo-list] li span')
         .should('have.length', 1)

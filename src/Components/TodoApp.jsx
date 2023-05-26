@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
-import { todoActions } from '../todosSlice';
-import { setFilter } from '../filtersSlice';
+import { todoActions } from '../Slices/todosSlice';
+import { setFilter } from '../Slices/filtersSlice';
 import store from '../store';
 import filteredTodosSelector from '../filterSelectors';
-import { FILTER_ALL } from '../constants';
+import {
+  ADD_TODO, CHECK_TODO, CLEAR_COMPLETED, DELETE_TODO, FILTER_ALL, REORDER_TODOS,
+} from '../constants';
 
 import TodoList from './TodoList';
 import Input from './Input';
@@ -30,7 +32,7 @@ function TodoApp() {
     event.preventDefault();
     if (inputValue.trim() !== '') {
       const newItem = { id: uuidv4(), text: inputValue, isCompleted: false };
-      dispatch(todoActions.addTodo(newItem));
+      dispatch(todoActions[ADD_TODO](newItem));
       setInputValue('');
     } else {
       // eslint-disable-next-line no-alert
@@ -44,12 +46,12 @@ function TodoApp() {
       'Are you sure you want to delete this todo?',
     );
     if (confirmed) {
-      dispatch(todoActions.deleteTodo(id));
+      dispatch(todoActions[DELETE_TODO](id));
     }
   };
 
   const handleCheckTodo = (id) => {
-    dispatch(todoActions.checkTodo(id));
+    dispatch(todoActions[CHECK_TODO](id));
   };
 
   const onSelectFilter = (filter = FILTER_ALL) => {
@@ -63,13 +65,13 @@ function TodoApp() {
       'Are you sure you want to clear all completed todos?',
     );
     if (confirmed) {
-      dispatch(todoActions.clearCompleted());
+      dispatch(todoActions[CLEAR_COMPLETED]());
     }
   };
 
   const handleDragEnd = (result) => {
     if (!result.destination) return;
-    dispatch(todoActions.reorderTodos(result));
+    dispatch(todoActions[REORDER_TODOS](result));
   };
 
   return (

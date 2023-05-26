@@ -1,0 +1,192 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TodoList Button should match the snapshot 1`] = `
+<DocumentFragment>
+  <button
+    class="buttonClicked"
+    type="button"
+  >
+    Test Button
+  </button>
+</DocumentFragment>
+`;
+
+exports[`TodoList Checkbox should match the snapshot 1`] = `
+<DocumentFragment>
+  <input
+    checked=""
+    class="roundCheckbox"
+    type="checkbox"
+  />
+</DocumentFragment>
+`;
+
+exports[`TodoList Filter should match the snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="filter"
+  >
+    <span
+      class="text"
+    >
+      5 items left
+    </span>
+    <button
+      class="button"
+      type="button"
+    >
+      All
+    </button>
+    <button
+      class="button"
+      type="button"
+    >
+      Active
+    </button>
+    <button
+      class="button"
+      type="button"
+    >
+      Completed
+    </button>
+    <button
+      class="button"
+      type="button"
+    >
+      Clear Completed
+    </button>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`TodoList Input should match the snapshot 1`] = `
+<DocumentFragment>
+  <input
+    class="input"
+    data-testid="input-new-todo"
+    maxlength="50"
+    placeholder="Please enter text here..."
+    type="text"
+    value="Example input"
+  />
+</DocumentFragment>
+`;
+
+exports[`TodoList TodoApp should match the snapshot 1`] = `
+<DocumentFragment>
+  <form>
+    <input
+      class="input"
+      data-testid="input-new-todo"
+      maxlength="50"
+      placeholder="Please enter text here..."
+      type="text"
+      value=""
+    />
+  </form>
+  <ul
+    class="todoList"
+    data-testid="todo-list"
+  />
+  <div
+    class="filter"
+  >
+    <span
+      class="text"
+    >
+      0 items left
+    </span>
+    <button
+      class="buttonClicked"
+      type="button"
+    >
+      All
+    </button>
+    <button
+      class="button"
+      type="button"
+    >
+      Active
+    </button>
+    <button
+      class="button"
+      type="button"
+    >
+      Completed
+    </button>
+    <button
+      class="button"
+      type="button"
+    >
+      Clear Completed
+    </button>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`TodoList TodoList should match the snapshot 1`] = `
+<DocumentFragment>
+  <ul
+    class="todoList"
+    data-testid="todo-list"
+  >
+    <li
+      aria-describedby="rbd-hidden-text-0-hidden-text-0"
+      class="todo "
+      data-rbd-drag-handle-context-id="0"
+      data-rbd-drag-handle-draggable-id="1"
+      data-rbd-draggable-context-id="0"
+      data-rbd-draggable-id="1"
+      data-testid="todo-item"
+      draggable="false"
+      role="button"
+      tabindex="0"
+    >
+      <input
+        class="roundCheckbox"
+        type="checkbox"
+      />
+      <span
+        class="text"
+      >
+        Todo 1
+      </span>
+      <button
+        class="button"
+        type="button"
+      >
+        X
+      </button>
+    </li>
+    <li
+      aria-describedby="rbd-hidden-text-0-hidden-text-0"
+      class="todo completed"
+      data-rbd-drag-handle-context-id="0"
+      data-rbd-drag-handle-draggable-id="2"
+      data-rbd-draggable-context-id="0"
+      data-rbd-draggable-id="2"
+      data-testid="todo-item"
+      draggable="false"
+      role="button"
+      tabindex="0"
+    >
+      <input
+        checked=""
+        class="roundCheckbox"
+        type="checkbox"
+      />
+      <span
+        class="text"
+      >
+        Todo 2
+      </span>
+      <button
+        class="button"
+        type="button"
+      >
+        X
+      </button>
+    </li>
+  </ul>
+</DocumentFragment>
+`;

@@ -7,10 +7,10 @@ import '@testing-library/jest-dom/extend-expect';
 import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import todosReducer, { todoActions } from '../todosSlice';
-import filtersReducer, { setFilter } from '../filtersSlice';
+import todosReducer, { todoActions } from '../Slices/todosSlice';
+import filtersReducer, { setFilter } from '../Slices/filtersSlice';
 import { FILTER_ALL, FILTER_ACTIVE, FILTER_COMPLETED } from '../constants';
-import { loadState } from '../localStorage';
+import { loadState } from '../localStorageRepository';
 import TodoApp from '../Components/TodoApp';
 import '../common.css';
 

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { FILTER_ALL } from './constants';
+import { FILTER_ALL } from '../constants';
 
 const filtersSlice = createSlice({
   name: 'todofilter',
