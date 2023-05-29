@@ -1,9 +1,11 @@
 .todo {
-  margin-bottom: 5px;
-  border: gray 1px solid;
+  margin-bottom: 0px;
+  border: gray solid;
+  border-width: 1px 0px 1px 0px;
   padding: 10px;
   font-size: 25px;
   height: 30px;
+  background-color: white;
 }
 
 .completed span {

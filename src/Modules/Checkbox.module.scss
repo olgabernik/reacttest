@@ -1,10 +1,10 @@
 .roundCheckbox {
-  width: 2em;
-  height: 2em;
+  width: 25px;
+  height: 25px;
   background-color: white;
   border-radius: 50%;
   vertical-align: middle;
-  border: 1px solid #ddd;
+  border: 2px solid gray;
   appearance: none;
   -webkit-appearance: none;
   outline: none;
@@ -19,7 +19,7 @@
 
 .roundCheckbox:checked:before {
   content: '✔';
-  font-size: 1.4em;
+  font-size: 16px;
   color: #fff;
   position: absolute;
   right: 4px;

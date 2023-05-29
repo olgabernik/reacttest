@@ -1,23 +1,44 @@
 body {
   text-align: center;
   font-size: 35px;
+  margin: 0px;
+  width: 100%;
 }
 
-h3 {
-  background-color: #a516ed;
-  font-weight: bold;
-  margin: 0px;
+.headerimg {
+  width: 100%;
+  height: 300px;
+}
+
+.header {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  justify-content: stretch;
+  display: flex;
 }
 
 .root {
   font-weight: bold;
+  position: absolute;
+  float: left;
+  top: 120px;
+  z-index: 1000;
+  background-color: transparent;
   padding: 5px;
-  display: inline-block;
+  width: 40%;
+  border-radius: 10px;
+}
+@media screen and (max-width: 800px) {
+  .root {
+    width: 90%;
+  }
 }
 
 .parent {
+  position: relative;
   font-weight: bold;
-  padding: 5px;
-  margin: 5px;
-  display: inline-block;
+  justify-content: center;
+  display: flex;
 }

@@ -1,7 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { loadState } from '../localStorageRepository';
 import {
-  FILTER_ALL, ADD_TODO, DELETE_TODO, CHECK_TODO, CLEAR_COMPLETED, REORDER_TODOS,
+  FILTER_ALL,
+  ADD_TODO,
+  DELETE_TODO,
+  CHECK_TODO,
+  CLEAR_COMPLETED,
+  REORDER_TODOS,
 } from '../constants';
 
 const todoitems = loadState();

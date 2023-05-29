@@ -15,15 +15,19 @@ function Filter({
   return (
     <div className={styles.filter}>
       <Text text={`${count} items left`} />
-      {filters.map((filter) => (
-        <Button
-          name={filter}
-          key={filter}
-          onClick={onSelectFilter}
-          parameter={filter}
-          isSelected={filter === selectedFilter}
-        />
-      ))}
+      <span className={styles.divider} />
+      <div className={styles.buttons}>
+        {filters.map((filter) => (
+          <Button
+            name={filter}
+            key={filter}
+            onClick={onSelectFilter}
+            parameter={filter}
+            isSelected={filter === selectedFilter}
+          />
+        ))}
+      </div>
+      <span className={styles.divider} />
       <Button name="Clear Completed" onClick={onClearCompleted} />
     </div>
   );

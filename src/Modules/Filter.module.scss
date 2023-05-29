@@ -1,4 +1,16 @@
 .filter {
   display: flex;
   padding: 5px;
+  margin-top: 5px;
+  justify-content: center;
+  width: 100%;
+}
+.divider {
+  width: 40px;
+}
+
+.buttons{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }

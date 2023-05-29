@@ -6,12 +6,20 @@ import { setFilter } from '../Slices/filtersSlice';
 import store from '../store';
 import filteredTodosSelector from '../filterSelectors';
 import {
-  ADD_TODO, CHECK_TODO, CLEAR_COMPLETED, DELETE_TODO, FILTER_ALL, REORDER_TODOS,
+  ADD_TODO,
+  CHECK_TODO,
+  CLEAR_COMPLETED,
+  DELETE_TODO,
+  FILTER_ALL,
+  REORDER_TODOS,
 } from '../constants';
 
 import TodoList from './TodoList';
 import Input from './Input';
 import Filter from './Filter';
+import Text from './Text';
+
+import styles from '../Modules/TodoApp.module.scss';
 
 function TodoApp() {
   const dispatch = useDispatch();
@@ -76,21 +84,29 @@ function TodoApp() {
 
   return (
     <>
+      <Text text="TO DO" style={styles.header} />
       <form onSubmit={handleAddTodo}>
         <Input inputValue={inputValue} handleInputChange={handleInputChange} />
       </form>
-      <TodoList
-        todos={todos}
-        onDeleteTodo={handleDeleteTodo}
-        onCheckTodo={handleCheckTodo}
-        onDragEnd={handleDragEnd}
-      />
-      <Filter
-        count={count}
-        onSelectFilter={onSelectFilter}
-        onClearCompleted={onClearCompleted}
-        selectedFilter={selectedFilter}
-      />
+      <div className={styles.container}>
+        {todos.length === 0 ? (
+          <Text text="No todos found..." style={styles.text} />
+        ) : (
+          <TodoList
+            todos={todos}
+            onDeleteTodo={handleDeleteTodo}
+            onCheckTodo={handleCheckTodo}
+            onDragEnd={handleDragEnd}
+          />
+        )}
+        <Filter
+          count={count}
+          onSelectFilter={onSelectFilter}
+          onClearCompleted={onClearCompleted}
+          selectedFilter={selectedFilter}
+        />
+      </div>
+
     </>
   );
 }

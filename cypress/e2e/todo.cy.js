@@ -1,5 +1,9 @@
 /// <reference types="cypress" />
-import { FILTER_ALL, FILTER_ACTIVE, FILTER_COMPLETED } from '../../src/constants'
+import {
+  FILTER_ALL,
+  FILTER_ACTIVE,
+  FILTER_COMPLETED,
+} from '../../src/constants';
 describe('to-do app e2e', () => {
   beforeEach(() => {
     cy.visit('http://localhost:3000/reacttest');
