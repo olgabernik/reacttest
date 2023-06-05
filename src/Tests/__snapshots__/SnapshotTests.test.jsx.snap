@@ -31,24 +31,34 @@ exports[`TodoList Filter should match the snapshot 1`] = `
     >
       5 items left
     </span>
-    <button
-      class="button"
-      type="button"
+    <span
+      class="divider"
+    />
+    <div
+      class="buttons"
     >
-      All
-    </button>
-    <button
-      class="button"
-      type="button"
-    >
-      Active
-    </button>
-    <button
-      class="button"
-      type="button"
-    >
-      Completed
-    </button>
+      <button
+        class="button"
+        type="button"
+      >
+        All
+      </button>
+      <button
+        class="button"
+        type="button"
+      >
+        Active
+      </button>
+      <button
+        class="button"
+        type="button"
+      >
+        Completed
+      </button>
+    </div>
+    <span
+      class="divider"
+    />
     <button
       class="button"
       type="button"
@@ -65,7 +75,7 @@ exports[`TodoList Input should match the snapshot 1`] = `
     class="input"
     data-testid="input-new-todo"
     maxlength="50"
-    placeholder="Please enter text here..."
+    placeholder="some text"
     type="text"
     value="Example input"
   />
@@ -74,6 +84,11 @@ exports[`TodoList Input should match the snapshot 1`] = `
 
 exports[`TodoList TodoApp should match the snapshot 1`] = `
 <DocumentFragment>
+  <span
+    class="header"
+  >
+    TO DO
+  </span>
   <form>
     <input
       class="input"
@@ -84,42 +99,57 @@ exports[`TodoList TodoApp should match the snapshot 1`] = `
       value=""
     />
   </form>
-  <ul
-    class="todoList"
-    data-testid="todo-list"
-  />
   <div
-    class="filter"
+    class="container"
   >
     <span
       class="text"
     >
-      0 items left
+      No todos found...
     </span>
-    <button
-      class="buttonClicked"
-      type="button"
+    <div
+      class="filter"
     >
-      All
-    </button>
-    <button
-      class="button"
-      type="button"
-    >
-      Active
-    </button>
-    <button
-      class="button"
-      type="button"
-    >
-      Completed
-    </button>
-    <button
-      class="button"
-      type="button"
-    >
-      Clear Completed
-    </button>
+      <span
+        class="text"
+      >
+        0 items left
+      </span>
+      <span
+        class="divider"
+      />
+      <div
+        class="buttons"
+      >
+        <button
+          class="buttonClicked"
+          type="button"
+        >
+          All
+        </button>
+        <button
+          class="button"
+          type="button"
+        >
+          Active
+        </button>
+        <button
+          class="button"
+          type="button"
+        >
+          Completed
+        </button>
+      </div>
+      <span
+        class="divider"
+      />
+      <button
+        class="button"
+        type="button"
+      >
+        Clear Completed
+      </button>
+    </div>
   </div>
 </DocumentFragment>
 `;
@@ -132,7 +162,7 @@ exports[`TodoList TodoList should match the snapshot 1`] = `
   >
     <li
       aria-describedby="rbd-hidden-text-0-hidden-text-0"
-      class="todo "
+      class="todo"
       data-rbd-drag-handle-context-id="0"
       data-rbd-drag-handle-draggable-id="1"
       data-rbd-draggable-context-id="0"

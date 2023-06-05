@@ -2,9 +2,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Draggable } from 'react-beautiful-dnd';
+import classnames from 'classnames';
+
 import Button from './Button';
 import Checkbox from './Checkbox';
-import Text from './Text';
 
 import styles from '../Modules/TodoItem.module.scss';
 
@@ -15,9 +16,9 @@ function TodoItem({
     <Draggable draggableId={todo.id} index={index}>
       {(provided) => (
         <li
-          className={`${styles.todo} ${
-            todo.isCompleted ? styles.completed : ''
-          }`}
+          className={classnames(styles.todo, {
+            [styles.completed]: todo.isCompleted,
+          })}
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
@@ -31,8 +32,8 @@ function TodoItem({
             onCheckTodo={onCheckTodo}
             todoid={todo.id}
           />
-          <Text text={todo.text} />
-          <Button name="X" onClick={onDeleteTodo} parameter={todo.id} />
+          <span className={styles.text}>{todo.text}</span>
+          <Button name="X" onClick={() => onDeleteTodo(todo.id)} />
         </li>
       )}
     </Draggable>

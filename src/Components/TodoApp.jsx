@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import { todoActions } from '../Slices/todosSlice';
 import { setFilter } from '../Slices/filtersSlice';
-import store from '../store';
 import filteredTodosSelector from '../filterSelectors';
 import {
   ADD_TODO,
@@ -17,7 +16,6 @@ import {
 import TodoList from './TodoList';
 import Input from './Input';
 import Filter from './Filter';
-import Text from './Text';
 
 import styles from '../Modules/TodoApp.module.scss';
 
@@ -25,7 +23,7 @@ function TodoApp() {
   const dispatch = useDispatch();
   let todos = useSelector((state) => state.todoitems);
   const count = todos ? todos.filter((todo) => !todo.isCompleted).length : 0;
-  const filteredTodos = filteredTodosSelector(store.getState());
+  const filteredTodos = useSelector(filteredTodosSelector);
   todos = filteredTodos || todos;
 
   const [inputValue, setInputValue] = useState('');
@@ -42,9 +40,6 @@ function TodoApp() {
       const newItem = { id: uuidv4(), text: inputValue, isCompleted: false };
       dispatch(todoActions[ADD_TODO](newItem));
       setInputValue('');
-    } else {
-      // eslint-disable-next-line no-alert
-      alert('Please enter a valid todo item.');
     }
   };
 
@@ -84,13 +79,13 @@ function TodoApp() {
 
   return (
     <>
-      <Text text="TO DO" style={styles.header} />
+      <span className={styles.header}>TO DO</span>
       <form onSubmit={handleAddTodo}>
-        <Input inputValue={inputValue} handleInputChange={handleInputChange} />
+        <Input inputValue={inputValue} handleInputChange={handleInputChange} placeholder="Please enter text here..." maxLength="50" />
       </form>
       <div className={styles.container}>
         {todos.length === 0 ? (
-          <Text text="No todos found..." style={styles.text} />
+          <span className={styles.text}>No todos found...</span>
         ) : (
           <TodoList
             todos={todos}

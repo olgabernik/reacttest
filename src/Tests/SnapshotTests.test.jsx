@@ -84,7 +84,7 @@ describe('TodoList', () => {
     const handleInputChange = jest.fn();
 
     const { asFragment } = render(
-      <Input inputValue={inputValue} handleInputChange={handleInputChange} />,
+      <Input inputValue={inputValue} handleInputChange={handleInputChange} placeholder="some text" maxLength="50" />,
     );
 
     expect(asFragment()).toMatchSnapshot();

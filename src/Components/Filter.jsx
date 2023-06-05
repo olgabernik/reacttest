@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from './Button';
-import Text from './Text';
 
 import { FILTER_ALL, FILTER_ACTIVE, FILTER_COMPLETED } from '../constants';
 
@@ -14,15 +13,14 @@ function Filter({
 }) {
   return (
     <div className={styles.filter}>
-      <Text text={`${count} items left`} />
+      <span className={styles.text}>{`${count} items left`}</span>
       <span className={styles.divider} />
       <div className={styles.buttons}>
         {filters.map((filter) => (
           <Button
             name={filter}
             key={filter}
-            onClick={onSelectFilter}
-            parameter={filter}
+            onClick={() => onSelectFilter(filter)}
             isSelected={filter === selectedFilter}
           />
         ))}
