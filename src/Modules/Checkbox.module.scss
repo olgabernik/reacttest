@@ -1,0 +1,26 @@
+.roundCheckbox {
+  width: 25px;
+  height: 25px;
+  background-color: white;
+  border-radius: 50%;
+  vertical-align: middle;
+  border: 2px solid gray;
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+  cursor: pointer;
+  float: left;
+}
+
+.roundCheckbox:checked {
+  background: lightskyblue;
+  position: relative;
+}
+
+.roundCheckbox:checked:before {
+  content: '✔';
+  font-size: 16px;
+  color: #fff;
+  position: absolute;
+  right: 4px;
+}

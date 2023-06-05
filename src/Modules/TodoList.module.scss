@@ -1,0 +1,9 @@
+.todoList {
+  list-style: none;
+  padding:5px 0px 0px 0px;
+  margin: 0px;
+}
+.todoList li:first-child {
+  border-top: none;
+  padding-top: 5px;
+}

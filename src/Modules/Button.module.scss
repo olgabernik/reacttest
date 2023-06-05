@@ -1,0 +1,19 @@
+@mixin button {
+  margin-left: 7px;
+  margin-top: 3px;
+  border: none;
+  background-color: transparent;
+  font-size: 18px;
+  font-weight: bold;
+  float: right;
+  cursor: pointer;
+  display: flex;
+}
+.button {
+  @include button;
+  color: darkgray;
+}
+.buttonClicked {
+  @include button;
+  color: black;
+}

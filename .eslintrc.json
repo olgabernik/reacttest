@@ -1,0 +1,23 @@
+{
+  "env": {
+    "jest": true,
+    "browser": true
+  },
+  "extends": ["airbnb", "plugin:react/recommended"],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 14,
+    "sourceType": "module"
+  },
+  "plugins": ["react", "react-hooks", "testing-library"],
+  "globals": {
+    "test": "readonly",
+    "expect": "readonly"
+  },
+  "rules": {
+    "strict": "off",
+    "no-param-reassign": "off"
+  }
+}
